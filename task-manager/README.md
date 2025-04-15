@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Management System
+
+A comprehensive task management application with user authentication, built with Next.js, MongoDB, and NextAuth.js.
+
+## Features
+
+- **User Authentication**
+  - Registration with email verification
+  - Login with JWT
+  - Role-based access (admin, user)
+  - Secure password hashing
+
+- **Task Management**
+  - Create, read, update, and delete tasks
+  - Task details: title, description, due date, priority, status
+  - Task categorization
+  - Task filtering and sorting
+
+- **Dashboard**
+  - Task statistics
+  - Calendar view
+  - Category management
+
+## Tech Stack
+
+- **Frontend**: Next.js, React, Tailwind CSS, shadcn/ui
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB
+- **Authentication**: NextAuth.js
+- **Form Handling**: React Hook Form, Zod
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
+- Node.js 18.x or higher
+- MongoDB database
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+\`\`\`
+# MongoDB
+MONGODB_URI=your_mongodb_connection_string
+
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
+
+# Email (for verification)
+EMAIL_SERVER_HOST=smtp.example.com
+EMAIL_SERVER_PORT=587
+EMAIL_SERVER_USER=your_email@example.com
+EMAIL_SERVER_PASSWORD=your_email_password
+EMAIL_FROM=your_email@example.com
+\`\`\`
+
+### Installation
+
+1. Clone the repository:
+\`\`\`bash
+git clone https://github.com/yourusername/task-management-system.git
+cd task-management-system
+\`\`\`
+
+2. Install dependencies:
+\`\`\`bash
+npm install
+\`\`\`
+
+3. Run the development server:
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+\`\`\`
+├── app/                  # Next.js App Router
+│   ├── api/              # API routes
+│   ├── dashboard/        # Dashboard pages
+│   ├── login/            # Login page
+│   ├── register/         # Registration page
+│   └── verify-email/     # Email verification page
+├── components/           # React components
+├── lib/                  # Utility functions and models
+│   ├── auth.ts           # Authentication configuration
+│   ├── email.ts          # Email sending functionality
+│   ├── models.ts         # MongoDB models
+│   └── mongodb.ts        # Database connection
+└── public/               # Static assets
+\`\`\`
 
-## Learn More
+## API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+### Authentication
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/verify-email` - Verify user email
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tasks
+- `GET /api/tasks` - Get all tasks for the current user
+- `POST /api/tasks` - Create a new task
+- `GET /api/tasks/:id` - Get a specific task
+- `PATCH /api/tasks/:id` - Update a task
+- `DELETE /api/tasks/:id` - Delete a task
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Categories
+- `GET /api/categories` - Get all categories for the current user
+- `POST /api/categories` - Create a new category
+- `PATCH /api/categories/:id` - Update a category
+- `DELETE /api/categories/:id` - Delete a category
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
