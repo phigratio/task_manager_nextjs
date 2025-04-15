@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import Link from "next/link"
 
 const registerSchema = z
@@ -28,7 +28,6 @@ type RegisterFormValues = z.infer<typeof registerSchema>
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { toast } = useToast()
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -62,17 +61,14 @@ export function RegisterForm() {
         throw new Error(result.message || "Registration failed")
       }
 
-      toast({
-        title: "Registration successful",
+      toast.success("Registration successful", {
         description: "Please check your email for verification.",
       })
 
       router.push("/login")
     } catch (error: any) {
-      toast({
-        title: "Registration failed",
+      toast.error("Registration failed", {
         description: error.message || "Please try again later.",
-        variant: "destructive",
       })
     } finally {
       setIsLoading(false)

@@ -1,32 +1,33 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
-import { redirect } from "next/navigation"
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "sonner"
+import { NextAuthProvider } from "@/components/auth-provider"
 
-export default async function Home() {
-  const session = await getServerSession(authOptions)
+const inter = Inter({ subsets: ["latin"] })
 
-  if (session) {
-    redirect("/dashboard")
-  }
+export const metadata: Metadata = {
+  title: "Task Management System",
+  description: "A comprehensive task management system with user authentication",
+}
 
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-b from-slate-50 to-slate-100">
-      <div className="max-w-5xl w-full text-center">
-        <h1 className="text-4xl font-bold mb-6">Task Management System</h1>
-        <p className="text-xl mb-8 text-slate-600">
-          Organize your tasks efficiently with our powerful task management platform
-        </p>
-        <div className="flex gap-4 justify-center">
-          <Button asChild size="lg">
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button asChild variant="outline" size="lg">
-            <Link href="/register">Register</Link>
-          </Button>
-        </div>
-      </div>
-    </main>
+    <html lang="en">
+      <body className={inter.className}>
+        <NextAuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+            <Toaster position="top-right" />
+          </ThemeProvider>
+        </NextAuthProvider>
+      </body>
+    </html>
   )
 }

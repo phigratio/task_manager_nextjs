@@ -8,7 +8,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { useToast } from "@/components/ui/use-toast"
+const { toast } = useToast()
+
 import { PlusCircle, Search, Calendar, Clock, Tag } from "lucide-react"
 
 interface Task {

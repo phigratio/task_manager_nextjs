@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import Link from "next/link"
 
 const loginSchema = z.object({
@@ -22,7 +22,6 @@ type LoginFormValues = z.infer<typeof loginSchema>
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { toast } = useToast()
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -43,24 +42,19 @@ export function LoginForm() {
       })
 
       if (response?.error) {
-        toast({
-          title: "Login failed",
+        toast.error("Login failed", {
           description: "Invalid email or password. Please try again.",
-          variant: "destructive",
         })
       } else {
-        toast({
-          title: "Login successful",
+        toast.success("Login successful", {
           description: "You have been logged in successfully.",
         })
         router.push("/dashboard")
         router.refresh()
       }
     } catch (error) {
-      toast({
-        title: "An error occurred",
+      toast.error("An error occurred", {
         description: "Please try again later.",
-        variant: "destructive",
       })
     } finally {
       setIsLoading(false)
